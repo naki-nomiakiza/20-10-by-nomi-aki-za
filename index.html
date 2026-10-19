@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 🌸</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💐</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Fullscreen Particle Canvas (Cánh hoa & hạt sao bay) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Ambient Glow Effects -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Top Floating Controls -->
+  <header class="top-nav-bar">
+    <button id="btn-music" class="circle-btn" title="Bật / Tắt nhạc">
+      <span class="btn-icon">🎵</span>
+      <span class="btn-text">Nhạc nền</span>
+    </button>
+    <button id="btn-open-music-modal" class="circle-btn" title="Chọn nhạc & Tải nhạc lên">
+      <span class="btn-icon">🎼</span>
+      <span class="btn-text">Đổi nhạc</span>
+    </button>
+    <button id="btn-quick-edit" class="circle-btn" title="Đổi tên người nhận">
+      <span class="btn-icon">✏️</span>
+      <span class="btn-text">Đổi tên</span>
+    </button>
+    <!-- Nút Tài Khoản / Đăng Nhập / Đăng Ký -->
+    <button id="btn-user-auth" class="circle-btn btn-auth-pill" title="Tài khoản cá nhân">
+      <span class="btn-icon">👤</span>
+      <span id="btn-user-text" class="btn-text">Đăng nhập</span>
+    </button>
+  </header>
+
+  <!-- Audio Player (Tự động phát file music.mp3 nếu có trong thư mục) -->
+  <audio id="bg-music-player" preload="auto" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <main class="page-wrapper">
+
+    <!-- HERO SECTION -->
+    <header class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-sparkle">✨</span>
+        <span>20 THÁNG 10 • NGÀY PHỤ NỮ VIỆT NAM</span>
+        <span class="badge-flag">🇻🇳</span>
+      </div>
+
+      <h1 class="hero-main-title" id="page-hero-title">
+        Yêu Thương Là Mãi Mãi
+      </h1>
+
+      <div class="recipient-card">
+        <span class="recipient-label">Gửi trọn yêu thương đến:</span>
+        <span id="recipient-name" class="recipient-highlight">Người Phụ Nữ Tuyệt Vời</span>
+        <button id="btn-open-recipient-modal" class="btn-edit-pill">
+          ✏️ Đổi tên người nhận
+        </button>
+      </div>
+
+      <!-- User status banner when logged in -->
+      <div id="user-status-card" class="user-status-card" style="display: none;">
+        <span>🌸 Đang đăng nhập tài khoản: <strong id="logged-user-name">Khách</strong></span>
+        <span class="user-data-saved-hint">✨ Hồ sơ và thiệp được lưu trên Supabase</span>
+      </div>
+
+      <p class="hero-quote">
+        "Phụ nữ là điều kỳ diệu và dịu dàng nhất của cuộc sống. Chúc bạn luôn rạng rỡ nụ cười trên môi, tự tin tỏa sáng và đón nhận muôn vàn hạnh phúc ngập tràn mỗi ngày!"
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#gift-section" class="btn btn-primary" id="btn-hero-gift">
+          🎁 Mở Hộp Quà Bí Mật
+        </a>
+        <a href="#wishes-section" class="btn btn-glass">
+          💌 Bộ Sưu Tập Lời Chúc
+        </a>
+        <a href="#card-creator-section" class="btn btn-glass">
+          🎨 Tự Tạo Thiệp 20/10
+        </a>
+      </div>
+    </header>
+
+    <!-- SECTION: GLOWING HEART CANVAS -->
+    <section class="heart-art-section">
+      <div class="heart-canvas-card">
+        <div class="art-card-header">
+          <span class="badge-small">Nhịp Đập Yêu Thương</span>
+          <h2 class="art-card-title">Trái Tim Nở Hoa</h2>
+        </div>
+        <div class="heart-canvas-box">
+          <canvas id="heart-canvas"></canvas>
+        </div>
+        <p class="heart-caption">💖 Yêu Thương Là Mãi Mãi • Chúc bạn luôn rạng rỡ và hạnh phúc 💖</p>
+      </div>
+    </section>
+
+    <!-- SECTION: 3D GIFT BOX -->
+    <section id="gift-section" class="content-section gift-section">
+      <div class="section-heading">
+        <span class="section-tag">Món Quà Bất Ngờ</span>
+        <h2 class="section-title">Hộp Quà Dành Riêng Cho Bạn</h2>
+        <p class="section-sub">Hãy chạm vào hộp quà để mở ra lời chúc ngọt ngào nhất!</p>
+      </div>
+
+      <div class="gift-box-area" id="gift-box-trigger">
+        <div id="gift-box-3d" class="gift-box-3d">
+          <div class="gift-box-lid">
+            <div class="gift-bow">
+              <div class="bow-petal bow-left"></div>
+              <div class="bow-petal bow-right"></div>
+              <div class="bow-center"></div>
+            </div>
+            <div class="lid-ribbon"></div>
+          </div>
+          <div class="gift-box-cube">
+            <div class="cube-ribbon-vertical"></div>
+            <div class="cube-ribbon-horizontal"></div>
+          </div>
+        </div>
+        <div id="gift-box-hint" class="gift-box-hint">
+          ✨ Chạm vào hộp quà để mở điều kỳ diệu! ✨
+        </div>
+      </div>
+
+      <!-- Letter revealed when opened -->
+      <article id="secret-letter" class="secret-letter">
+        <div class="letter-inner">
+          <div class="letter-top">
+            <h3 id="letter-recipient" class="letter-recipient">Gửi Người Phụ Nữ Tuyệt Vời,</h3>
+            <span class="letter-date">20 Tháng 10</span>
+          </div>
+
+          <div id="letter-body" class="letter-body">
+            <p>Nhân Ngày Phụ nữ Việt Nam 20/10, xin gửi đến bạn những lời chúc ngọt ngào, ấm áp và trọn vẹn nhất!</p>
+            <p>Cảm ơn bạn đã luôn hiện diện, mang lại nụ cười, nguồn năng lượng tích cực và những điều dịu dàng nhất cho mọi người xung quanh.</p>
+            <p>Chúc bạn mỗi ngày trôi qua đều ngập tràn niềm vui, luôn xinh đẹp rạng ngời như những đóa hoa mùa thu, tự tin chạm đến mọi ước mơ và được yêu thương thật nhiều!</p>
+          </div>
+
+          <div class="letter-bottom">
+            <div class="letter-seal">❤</div>
+            <div class="letter-sign">
+              <span class="sign-label">Trân trọng gửi tặng,</span>
+              <span id="letter-signer-name" class="sign-name">Yêu Thương Là Mãi Mãi</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- SECTION: WISHES DIRECTORY -->
+    <section id="wishes-section" class="content-section">
+      <div class="section-heading">
+        <span class="section-tag">Gửi Trao Yêu Thương</span>
+        <h2 class="section-title">Kho Lời Chúc 20/10 Ý Nghĩa</h2>
+        <p class="section-sub">Chọn đối tượng người nhận để xem lời chúc hay nhất, sao chép nhanh hoặc đưa vào thiệp:</p>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="tabs-slider">
+        <button class="tab-chip active" data-category="me">🌸 Cho Mẹ</button>
+        <button class="tab-chip" data-category="vo">💖 Vợ & Người Yêu</button>
+        <button class="tab-chip" data-category="crush">🌷 Bạn Gái / Crush</button>
+        <button class="tab-chip" data-category="chi">🌼 Chị & Em Gái</button>
+        <button class="tab-chip" data-category="co">🌺 Cô Giáo</button>
+        <button class="tab-chip" data-category="dongnghiep">💼 Nữ Đồng Nghiệp</button>
+      </div>
+
+      <!-- Wishes Cards Grid -->
+      <div id="wishes-grid" class="wishes-grid"></div>
+    </section>
+
+    <!-- SECTION: CARD CREATOR -->
+    <section id="card-creator-section" class="content-section card-creator-section">
+      <div class="section-heading">
+        <span class="section-tag">Thiết Kế Độc Quyền</span>
+        <h2 class="section-title">Tự Tay Tạo Thiệp 20/10</h2>
+        <p class="section-sub">Tùy chỉnh tên người nhận, lời chúc và tải ảnh thiệp chất lượng cao (PNG) hoàn toàn miễn phí!</p>
+      </div>
+
+      <div class="creator-container">
+        <!-- Form Options -->
+        <div class="creator-controls">
+          <div class="input-field">
+            <label for="card-input-to">Tên người nhận trên thiệp:</label>
+            <input type="text" id="card-input-to" value="Mẹ Yêu Dấu" placeholder="Nhập tên người nhận...">
+          </div>
+
+          <div class="input-field">
+            <label for="card-input-from">Tên người gửi (Ký tên):</label>
+            <input type="text" id="card-input-from" value="Yêu Thương Là Mãi Mãi" placeholder="Tên hoặc biệt danh của bạn...">
+          </div>
+
+          <div class="input-field">
+            <label for="card-theme-select">Phong cách & Tông màu thiệp:</label>
+            <select id="card-theme-select">
+              <option value="rose">🌹 Hồng Rose Quý Phái</option>
+              <option value="gold">✨ Hoàng Kim Sang Trọng</option>
+              <option value="violet">💜 Tím Lavender Dịu Dàng</option>
+              <option value="emerald">🌿 Xanh Ngọc Thanh Nhã</option>
+            </select>
+          </div>
+
+          <div class="input-field">
+            <label for="card-input-message">Nội dung lời chúc trên thiệp:</label>
+            <textarea id="card-input-message" rows="4" placeholder="Nhập lời chúc...">Chúc người phụ nữ tuyệt vời nhất của con có một ngày 20/10 thật hạnh phúc, dồi dào sức khỏe và luôn rạng rỡ nụ cười trên môi!</textarea>
+          </div>
+        </div>
+
+        <!-- Canvas Card Live Preview -->
+        <div class="creator-preview">
+          <div class="canvas-card-frame">
+            <canvas id="card-canvas"></canvas>
+          </div>
+          <button id="btn-download-card" class="btn btn-primary btn-block">
+            📥 Tải Ảnh Thiệp Chất Lượng Cao (PNG)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: INTERACTIVE GARDEN -->
+    <section class="content-section garden-section">
+      <div class="section-heading">
+        <span class="section-tag">Tương Tác Vui Vẻ</span>
+        <h2 class="section-title">Vườn Hoa & Bão Tim 20/10</h2>
+        <p class="section-sub">Chạm vào các nút dưới đây để gửi ngập tràn hoa tươi và tình yêu thương bay bổng!</p>
+      </div>
+
+      <div class="flower-stats">
+        <span>💐 Tổng số đóa hoa & trái tim đã gửi:</span>
+        <strong id="counter-flower" class="counter-badge">520</strong>
+      </div>
+
+      <div class="flower-buttons-row">
+        <button class="btn-spawn" data-flower="rose">
+          <span class="btn-spawn-icon">🌹</span>
+          <span class="btn-spawn-text">Tặng Hoa Hồng</span>
+        </button>
+        <button class="btn-spawn" data-flower="heart">
+          <span class="btn-spawn-icon">💖</span>
+          <span class="btn-spawn-text">Thả Bão Tim</span>
+        </button>
+        <button class="btn-spawn" data-flower="bouquet">
+          <span class="btn-spawn-icon">💐</span>
+          <span class="btn-spawn-text">Trao Bó Hoa Tươi</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION: FORTUNE WHEEL -->
+    <section class="content-section fortune-section">
+      <div class="section-heading">
+        <span class="section-tag">Góc Bất Ngờ</span>
+        <h2 class="section-title">Hộp Thần Kỳ: Lời Khen & Điều Ước</h2>
+        <p class="section-sub">Bấm nút để rút một thông điệp may mắn và ngọt ngào dành riêng cho bạn hôm nay!</p>
+      </div>
+
+      <div class="fortune-card">
+        <p id="fortune-quote" class="fortune-quote">
+          ✨ Chạm vào nút bên dưới để nhận thông điệp ngọt ngào dành riêng cho bạn hôm nay! ✨
+        </p>
+      </div>
+
+      <button id="btn-draw-fortune" class="btn btn-primary">
+        🥠 Rút Thông Điệp May Mắn
+      </button>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="page-footer">
+      <p class="footer-blessing">
+        Chúc mừng Ngày Phụ Nữ Việt Nam 20/10 <span class="footer-heart">❤</span>
+      </p>
+      <p class="footer-sub">
+        Gửi trọn tình yêu thương và sự trân trọng tới một nửa tuyệt vời của thế giới!
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- ========================================================
+       MODALS SYSTEM
+       ======================================================== -->
+
+  <!-- MODAL: CÁ NHÂN HÓA NGƯỜI NHẬN -->
+  <div id="recipient-modal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <h3 class="modal-title">Cá Nhân Hóa Người Nhận 🌸</h3>
+      <p class="modal-desc">
+        Nhập tên hoặc danh xưng người bạn muốn gửi trang web này đến (Toàn bộ trang web, thư tay và thiệp sẽ tự động đồng bộ theo tên này):
+      </p>
+
+      <input type="text" id="modal-input-name" class="modal-input" placeholder="Ví dụ: Mẹ Yêu, Vợ Yêu Thảo, Bé Mai, Cô Giáo...">
+
+      <div class="preset-group">
+        <span class="preset-label">Gợi ý nhanh:</span>
+        <div class="preset-list">
+          <button class="preset-pill" type="button" data-name="Mẹ Yêu">Mẹ Yêu 🌸</button>
+          <button class="preset-pill" type="button" data-name="Vợ Yêu">Vợ Yêu 💖</button>
+          <button class="preset-pill" type="button" data-name="Bé Yêu">Bé Yêu 💕</button>
+          <button class="preset-pill" type="button" data-name="Cô Giáo Kính Yêu">Cô Giáo 🌺</button>
+          <button class="preset-pill" type="button" data-name="Chị Gái Yêu Quý">Chị Gái 🌼</button>
+          <button class="preset-pill" type="button" data-name="Em Gái Đáng Yêu">Em Gái 🍭</button>
+          <button class="preset-pill" type="button" data-name="Crush Xinh Đẹp">Crush 🌷</button>
+          <button class="preset-pill" type="button" data-name="Nữ Đồng Nghiệp Tuyệt Vời">Đồng Nghiệp 💼</button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btn-modal-cancel" class="btn btn-glass" type="button">Hủy bỏ</button>
+        <button id="btn-modal-save" class="btn btn-primary" type="button">Áp dụng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CHỌN NHẠC & TẢI NHẠC LÊN -->
+  <div id="music-modal" class="modal-backdrop">
+    <div class="modal-dialog music-modal-dialog">
+      <h3 class="modal-title">Chọn Nhạc Nền 20/10 🎶</h3>
+      <p class="modal-desc">
+        Bạn có thể tải trực tiếp file nhạc MP3 từ máy tính lên, chọn các bản nhạc có sẵn hoặc dán link nhạc online:
+      </p>
+
+      <!-- 1. Tải nhạc từ máy tính -->
+      <div class="music-option-card">
+        <span class="music-option-title">📁 Tải file bài hát từ máy tính lên:</span>
+        <div class="file-upload-box">
+          <input type="file" id="music-file-input" accept="audio/*" style="display: none;">
+          <button type="button" id="btn-trigger-upload" class="btn btn-primary btn-sm">
+            📂 Chọn file MP3 từ máy tính
+          </button>
+          <span id="music-file-name" class="file-name-display">Chưa chọn file</span>
+        </div>
+      </div>
+
+      <!-- 2. Danh sách giai điệu có sẵn -->
+      <div class="music-option-card">
+        <span class="music-option-title">🎼 Hoặc chọn giai điệu có sẵn:</span>
+        <div class="preset-song-list">
+          <button type="button" class="preset-song-item active" data-song="yeu-thuong">
+            <span class="song-item-icon">🎵</span>
+            <div class="song-item-info">
+              <strong class="song-item-name">Yêu Thương Chẳng Là Mãi Mãi</strong>
+              <small class="song-item-sub">Điệp khúc bản hit của DC Tâm</small>
+            </div>
+          </button>
+          <button type="button" class="preset-song-item" data-song="anh-nang">
+            <span class="song-item-icon">✨</span>
+            <div class="song-item-info">
+              <strong class="song-item-name">Ánh Nắng Của Anh</strong>
+              <small class="song-item-sub">Giai điệu piano lãng mạn, ngọt ngào</small>
+            </div>
+          </button>
+          <button type="button" class="preset-song-item" data-song="canon">
+            <span class="song-item-icon">🎹</span>
+            <div class="song-item-info">
+              <strong class="song-item-name">Canon in D</strong>
+              <small class="song-item-sub">Bản giao hưởng tình yêu bất hủ</small>
+            </div>
+          </button>
+          <button type="button" class="preset-song-item" data-song="diu-dang">
+            <span class="song-item-icon">🌸</span>
+            <div class="song-item-info">
+              <strong class="song-item-name">Giai Điệu Dịu Dàng 20/10</strong>
+              <small class="song-item-sub">Tiếng chuông ngân êm đềm, thư thái</small>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Dán link nhạc trực tuyến -->
+      <div class="music-option-card">
+        <span class="music-option-title">🔗 Hoặc dán link file nhạc MP3 online:</span>
+        <div class="url-input-group">
+          <input type="text" id="music-url-input" class="modal-input" placeholder="https://example.com/bai-hat.mp3" style="margin-bottom: 0;">
+          <button type="button" id="btn-apply-url" class="btn btn-glass btn-sm">Áp dụng</button>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="margin-top: 20px;">
+        <button id="btn-close-music-modal" class="btn btn-primary" type="button">Xong</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HỆ THỐNG ĐĂNG NHẬP & TẠO TÀI KHOẢN (MULTI-USER AUTH) -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-dialog auth-dialog">
+      <p id="auth-status" class="auth-status" role="status" aria-live="polite" hidden></p>
+
+      <!-- Tabs Switcher: Đăng Nhập vs Tạo Tài Khoản -->
+      <div class="auth-tabs-nav">
+        <button type="button" id="auth-tab-login-btn" class="auth-tab-btn active">Đăng Nhập 🔑</button>
+        <button type="button" id="auth-tab-register-btn" class="auth-tab-btn">Tạo Tài Khoản ✨</button>
+      </div>
+
+      <!-- FORM 1: ĐĂNG NHẬP -->
+      <form id="form-login" class="auth-form-pane active">
+        <p class="modal-desc">Đăng nhập để nạp lại tên người nhận và mẫu thiệp đã lưu trên máy chủ.</p>
+
+        <div class="input-field">
+          <label for="login-email">Email:</label>
+          <input type="email" id="login-email" class="modal-input" placeholder="Nhập email đăng ký..." required autocomplete="email">
+        </div>
+
+        <div class="input-field">
+          <label for="login-password">Mật khẩu:</label>
+          <input type="password" id="login-password" class="modal-input" placeholder="Nhập mật khẩu..." required autocomplete="current-password">
+        </div>
+
+        <div class="auth-helper-row">
+          <span class="auth-hint-text">Chưa có tài khoản? <a href="javascript:void(0)" id="link-go-to-register">Tạo tài khoản mới</a></span>
+        </div>
+
+        <div class="modal-footer" style="margin-top: 20px;">
+          <button id="btn-close-auth-modal" class="btn btn-glass" type="button">Đóng</button>
+          <button id="btn-submit-login" class="btn btn-primary" type="submit">Đăng Nhập</button>
+        </div>
+      </form>
+
+      <!-- FORM 2: TẠO TÀI KHOẢN MỚI -->
+      <form id="form-register" class="auth-form-pane">
+        <p class="modal-desc">Tạo tài khoản để lưu dữ liệu lên máy chủ và dùng trên các thiết bị khác.</p>
+
+        <div class="input-field">
+          <label for="reg-fullname">Họ tên / Tên hiển thị của bạn:</label>
+          <input type="text" id="reg-fullname" class="modal-input" placeholder="Ví dụ: Tuấn Hùng, Lan Anh..." required>
+        </div>
+
+        <div class="input-field">
+          <label for="reg-email">Email:</label>
+          <input type="email" id="reg-email" class="modal-input" placeholder="Nhập email của bạn..." required autocomplete="email">
+        </div>
+
+        <div class="input-field">
+          <label for="reg-password">Mật khẩu:</label>
+          <input type="password" id="reg-password" class="modal-input" placeholder="Tạo mật khẩu (tối thiểu 8 ký tự)..." required minlength="8" autocomplete="new-password">
+        </div>
+
+        <div class="input-field">
+          <label for="reg-recipient">Tên người nhận yêu thương của bạn:</label>
+          <input type="text" id="reg-recipient" class="modal-input" placeholder="Ví dụ: Mẹ Yêu Dấu, Vợ Yêu Thảo, Bé Mai...">
+        </div>
+
+        <div class="auth-helper-row">
+          <span class="auth-hint-text">Đã có tài khoản rồi? <a href="javascript:void(0)" id="link-go-to-login">Đăng nhập tại đây</a></span>
+        </div>
+
+        <div class="modal-footer" style="margin-top: 20px;">
+          <button id="btn-cancel-register" class="btn btn-glass" type="button">Hủy</button>
+          <button id="btn-submit-register" class="btn btn-primary" type="submit">Tạo Tài Khoản Mới</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: BẢNG QUẢN LÝ TÀI KHOẢN CÁ NHÂN & ADMIN -->
+  <div id="user-profile-modal" class="modal-backdrop">
+    <div class="modal-dialog user-profile-dialog">
+      <div class="profile-header">
+        <div class="profile-avatar">🌸</div>
+        <div class="profile-user-info">
+          <h3 id="profile-display-name" class="profile-name">Tuấn Hùng</h3>
+          <span id="profile-role-badge" class="profile-badge">Thành viên cá nhân</span>
+        </div>
+      </div>
+
+      <div class="profile-summary-box">
+        <div class="profile-info-row">
+          <span>Email:</span>
+          <strong id="profile-username-text">email@example.com</strong>
+        </div>
+        <div class="profile-info-row">
+          <span>Người nhận hiện tại:</span>
+          <strong id="profile-recipient-text">Vợ Yêu</strong>
+        </div>
+        <div class="profile-info-row">
+          <span>Trạng thái lưu trữ:</span>
+          <span class="text-green">✅ Hồ sơ và thiệp được lưu trên máy chủ</span>
+        </div>
+      </div>
+
+      <!-- Admin Dashboard access if user is admin -->
+      <div id="admin-access-box" class="admin-access-box" style="display: none;">
+        <span class="admin-access-title">👑 Quyền Quản Trị Hệ Thống:</span>
+        <button type="button" id="btn-open-admin-controls" class="btn btn-primary btn-sm btn-block">
+          ⚙️ Mở Bảng Điều Khiển Admin (Dashboard)
+        </button>
+      </div>
+
+      <div class="profile-actions-list">
+        <button type="button" id="btn-profile-change-recipient" class="btn btn-glass btn-block">
+          ✏️ Đổi Tên Người Nhận Cá Nhân
+        </button>
+        <button type="button" id="btn-toggle-account-settings" class="btn btn-glass btn-block" aria-expanded="false" aria-controls="account-settings">
+          ⚙️ Cài Đặt Tài Khoản
+        </button>
+        <div id="account-settings" class="account-settings" hidden>
+          <form id="form-update-display-name" class="account-setting-form">
+            <div class="input-field">
+              <label for="account-display-name-input">Tên hiển thị:</label>
+              <input type="text" id="account-display-name-input" required maxlength="80" autocomplete="name">
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Lưu tên hiển thị</button>
+          </form>
+
+          <form id="form-update-email" class="account-setting-form">
+            <div class="input-field">
+              <label for="account-email-input">Email mới:</label>
+              <input type="email" id="account-email-input" required autocomplete="email">
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Đổi email</button>
+            <p class="account-setting-hint">Supabase có thể yêu cầu xác nhận email mới trước khi cập nhật.</p>
+          </form>
+
+          <form id="form-update-password" class="account-setting-form">
+            <div class="input-field">
+              <label for="account-password-input">Mật khẩu mới:</label>
+              <input type="password" id="account-password-input" required minlength="8" autocomplete="new-password">
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Đổi mật khẩu</button>
+          </form>
+        </div>
+        <button type="button" id="btn-user-logout" class="btn btn-glass btn-block" style="color: #c9184a; border-color: #ffccd5;">
+          🚪 Đăng Xuất Tài Khoản
+        </button>
+      </div>
+
+      <div class="modal-footer" style="margin-top: 20px;">
+        <button id="btn-close-profile-modal" class="btn btn-primary" type="button">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: BẢNG ĐIỀU KHIỂN ADMIN CẤP CAO -->
+  <div id="admin-dashboard-modal" class="modal-backdrop">
+    <div class="modal-dialog admin-dashboard-dialog">
+      <div class="admin-header-row">
+        <div>
+          <h3 class="modal-title">Bảng Điều Khiển Quản Trị Hệ Thống 👑</h3>
+          <span class="admin-status-badge">Đang đăng nhập với quyền Admin Tối Cao</span>
+        </div>
+      </div>
+
+      <!-- Admin Tab Switcher -->
+      <div class="admin-tabs-nav">
+        <button type="button" class="admin-tab-btn active" data-tab="general">⚙️ Cấu hình chung</button>
+        <button type="button" class="admin-tab-btn" data-tab="wishes">📝 Thêm lời chúc</button>
+        <button type="button" class="admin-tab-btn" data-tab="accounts">👥 Quản lý tài khoản</button>
+        <button type="button" class="admin-tab-btn" data-tab="security">🔒 Bảo mật & Đặt lại</button>
+      </div>
+
+      <!-- Tab 1: Cấu hình chung -->
+      <div id="admin-tab-general" class="admin-tab-pane active">
+        <div class="input-field">
+          <label for="admin-setting-title">Tiêu đề chính trên trang (Hero Title):</label>
+          <input type="text" id="admin-setting-title" value="Yêu Thương Là Mãi Mãi">
+        </div>
+
+        <div class="input-field">
+          <label for="admin-setting-recipient">Tên người nhận mặc định:</label>
+          <input type="text" id="admin-setting-recipient" value="Người Phụ Nữ Tuyệt Vời">
+        </div>
+
+        <div class="input-field">
+          <label for="admin-setting-flowers">Số lượng hoa ban đầu:</label>
+          <input type="number" id="admin-setting-flowers" value="520" min="0">
+        </div>
+
+        <div class="input-field">
+          <label for="admin-setting-letter">Nội dung Bức Thư Bí Mật 3D:</label>
+          <textarea id="admin-setting-letter" rows="4">Nhân Ngày Phụ nữ Việt Nam 20/10, xin gửi đến bạn những lời chúc ngọt ngào, ấm áp và trọn vẹn nhất!
+
+Cảm ơn bạn đã luôn hiện diện, mang lại nụ cười, nguồn năng lượng tích cực và những điều dịu dàng nhất cho mọi người xung quanh.
+
+Chúc bạn mỗi ngày trôi qua đều ngập tràn niềm vui, luôn xinh đẹp rạng ngời như những đóa hoa mùa thu, tự tin chạm đến mọi ước mơ và được yêu thương thật nhiều!</textarea>
+        </div>
+
+        <button type="button" id="btn-save-general-settings" class="btn btn-primary btn-block">
+          💾 Lưu Cấu Hình Toàn Trang
+        </button>
+      </div>
+
+      <!-- Tab 2: Thêm lời chúc mới -->
+      <div id="admin-tab-wishes" class="admin-tab-pane">
+        <div class="input-field">
+          <label for="admin-wish-cat">Chọn danh mục lời chúc:</label>
+          <select id="admin-wish-cat">
+            <option value="me">🌸 Cho Mẹ</option>
+            <option value="vo">💖 Vợ & Người Yêu</option>
+            <option value="crush">🌷 Bạn Gái / Crush</option>
+            <option value="chi">🌼 Chị & Em Gái</option>
+            <option value="co">🌺 Cô Giáo</option>
+            <option value="dongnghiep">💼 Nữ Đồng Nghiệp</option>
+          </select>
+        </div>
+
+        <div class="input-field">
+          <label for="admin-wish-title">Tiêu đề lời chúc:</label>
+          <input type="text" id="admin-wish-title" placeholder="Ví dụ: Lời Chúc Ngọt Ngào...">
+        </div>
+
+        <div class="input-field">
+          <label for="admin-wish-text">Nội dung lời chúc:</label>
+          <textarea id="admin-wish-text" rows="3" placeholder="Nhập câu chúc ý nghĩa..."></textarea>
+        </div>
+
+        <button type="button" id="btn-add-custom-wish" class="btn btn-primary btn-block">
+          ➕ Thêm Lời Chúc Vào Hệ Thống
+        </button>
+      </div>
+
+      <!-- Tab 3: Quản lý người dùng qua Supabase -->
+      <div id="admin-tab-accounts" class="admin-tab-pane">
+        <div class="admin-hint-box">
+          Danh sách, khóa hoặc xóa tài khoản được quản lý trong Supabase Dashboard → Authentication → Users.
+          Website không tải danh sách người dùng vào trình duyệt để tránh cấp quyền quản trị Auth cho frontend.
+        </div>
+      </div>
+
+      <!-- Tab 4: Bảo mật & Đặt lại -->
+      <div id="admin-tab-security" class="admin-tab-pane">
+        <div style="border-top: 1px dashed #ffd1dc; padding-top: 15px;">
+          <span style="display: block; font-size: 0.9rem; color: var(--wine-rose); font-weight: 700; margin-bottom: 8px;">
+            ⚠️ Khôi phục cài đặt gốc:
+          </span>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px;">
+            Đưa các tùy chỉnh giao diện được lưu trên trình duyệt này về trạng thái ban đầu. Không xóa tài khoản Supabase.
+          </p>
+          <button type="button" id="btn-reset-all-settings" class="btn btn-glass btn-block" style="color: #c9184a; border-color: #ffccd5;">
+            🔄 Khôi Phục Cài Đặt Gốc
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="margin-top: 20px;">
+        <button id="btn-close-admin-dashboard" class="btn btn-glass" type="button">Đóng bảng điều khiển</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- MAIN SCRIPT -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
